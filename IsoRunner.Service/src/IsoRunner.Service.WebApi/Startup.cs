@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using IsoRunner.Service.Core.Services;
-using IsoRunner.Service.Core.Services.Stubs;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -39,7 +37,6 @@ namespace IsoRunner.Service.WebApi
 			});
 
 			services.AddSingleton(provider => MapperConfiguration.CreateMapper());
-			services.AddTransient<INewsRepository>(provider => new NewsRepositoryStub());
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
