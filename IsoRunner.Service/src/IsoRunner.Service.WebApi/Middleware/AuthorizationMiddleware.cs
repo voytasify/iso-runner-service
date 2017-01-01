@@ -19,14 +19,22 @@ namespace IsoRunner.Service.WebApi.Middleware
 
 		public async Task Invoke(HttpContext context)
 		{
-			StringValues apiKeys;
-			if (context.Request.Headers.TryGetValue("X-ApiKey", out apiKeys))
+			if (context.Request.Path.ToString().StartsWith("/swagger/"))
 			{
-				var apiKey = apiKeys.FirstOrDefault();
-				if (apiKey == _apiKeyService.ApiKey)
-					await _next.Invoke(context);
+				await _next.Invoke(context);
 			}
-			context.Response.StatusCode = 401;
+			else
+			{
+				StringValues apiKeys;
+				if (context.Request.Headers.TryGetValue("X-ApiKey", out apiKeys))
+				{
+					var apiKey = apiKeys.FirstOrDefault();
+					if (apiKey == _apiKeyService.ApiKey)
+						await _next.Invoke(context);
+				}
+
+				context.Response.StatusCode = 401;
+			}
 		}
 	}
 }
