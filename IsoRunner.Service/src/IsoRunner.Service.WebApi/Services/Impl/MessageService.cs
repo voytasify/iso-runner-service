@@ -7,33 +7,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IsoRunner.Service.WebApi.Services.Impl
 {
-	public class NotesService : INotesService
+	public class MessageService : IMessageService
 	{
 		private readonly IsoRunnerContext _context;
 
-		public NotesService(IsoRunnerContext context)
+		public MessageService(IsoRunnerContext context)
 		{
 			_context = context;
 		}
 
-		public void AddNote(string text, User user)
+		public void AddMessage(User user, string text)
 		{
-			var note = new Note
+			var message = new Message
 			{
 				Text = text,
-				CreationTime = DateTime.Now,
+				PublishDate = DateTime.Now,
 				User = user
 			};
-			_context.Notes.Add(note);
+
+			_context.Messages.Add(message);
 			_context.SaveChanges();
 		}
 
-		public IEnumerable<Note> GetNotes(User user)
+		public IEnumerable<Message> GetMessages()
 		{
-			var notes = _context.Users.Include(u => u.Notes)
-				.FirstOrDefault(u => u.UserId == user.UserId).Notes
-				.ToList();
-			return notes;
+			var messages = _context.Messages.Include(m => m.User).ToList();
+			return messages;
 		}
 	}
 }

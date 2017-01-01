@@ -38,6 +38,7 @@ namespace IsoRunner.Service.WebApi
 			services.AddTransient<IUsersService, UsersService>();
 			services.AddTransient<ITokenService, TokenService>();
 			services.AddTransient<INotesService, NotesService>();
+			services.AddTransient<IMessageService, MessageService>();
 
 			services.AddMvc();
 		}

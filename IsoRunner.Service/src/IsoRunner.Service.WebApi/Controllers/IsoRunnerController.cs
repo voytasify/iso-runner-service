@@ -11,12 +11,14 @@ namespace IsoRunner.Service.WebApi.Controllers
 	{
 		private readonly IUsersService _usersService;
 		private readonly INotesService _notesService;
+		private readonly IMessageService _messageService;
 		private readonly IMapper _mapper;
 
-		public IsoRunnerController(IUsersService usersService, INotesService notesService, IMapper mapper)
+		public IsoRunnerController(IUsersService usersService, INotesService notesService, IMessageService messageService, IMapper mapper)
 		{
 			_usersService = usersService;
 			_notesService = notesService;
+			_messageService = messageService;
 			_mapper = mapper;
 		}
 
@@ -51,6 +53,27 @@ namespace IsoRunner.Service.WebApi.Controllers
 
 			var notes = _notesService.GetNotes(user);
 			return _mapper.Map<IEnumerable<NoteDTO>>(notes);
+		}
+
+		[HttpPost]
+		public void AddMessage([FromQuery] string token, string text)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return;
+
+			_messageService.AddMessage(user, text);
+		}
+
+		[HttpGet]
+		public IEnumerable<MessageDTO> GetMessages(string token)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return null;
+
+			var messages = _messageService.GetMessages();
+			return _mapper.Map<IEnumerable<MessageDTO>>(messages);
 		}
 	}
 }
