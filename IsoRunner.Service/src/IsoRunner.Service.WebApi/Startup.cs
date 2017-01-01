@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IsoRunner.Service.WebApi.Extensions;
 using IsoRunner.Service.WebApi.Infrastructure;
 using IsoRunner.Service.WebApi.Services;
 using IsoRunner.Service.WebApi.Services.Impl;
@@ -39,6 +40,7 @@ namespace IsoRunner.Service.WebApi
 			services.AddTransient<ITokenService, TokenService>();
 			services.AddTransient<INotesService, NotesService>();
 			services.AddTransient<IMessageService, MessageService>();
+			services.AddSingleton<IApiKeyService>(new ApiKeyService(Configuration.GetValue<string>("X-ApiKey")));
 
 			services.AddMvc();
 
@@ -49,6 +51,8 @@ namespace IsoRunner.Service.WebApi
 		{
 			loggerFactory.AddConsole(Configuration.GetSection("Logging"));
 			loggerFactory.AddDebug();
+
+			app.UseAuthorization();
 
 			app.UseMvc();
 
