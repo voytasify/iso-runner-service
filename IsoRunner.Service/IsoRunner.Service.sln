@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IsoRunner.Service.WebApi", "src\IsoRunner.Service.WebApi\IsoRunner.Service.WebApi.xproj", "{12FA53D0-78BB-4FCB-AC71-F4C40EF224A9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "IsoRunner.Service.Core", "src\IsoRunner.Service.Core\IsoRunner.Service.Core.xproj", "{E5E0758B-A5C9-43E5-8F18-000F57C160B3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,16 +22,11 @@ Global
 		{12FA53D0-78BB-4FCB-AC71-F4C40EF224A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12FA53D0-78BB-4FCB-AC71-F4C40EF224A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12FA53D0-78BB-4FCB-AC71-F4C40EF224A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5E0758B-A5C9-43E5-8F18-000F57C160B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5E0758B-A5C9-43E5-8F18-000F57C160B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5E0758B-A5C9-43E5-8F18-000F57C160B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5E0758B-A5C9-43E5-8F18-000F57C160B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{12FA53D0-78BB-4FCB-AC71-F4C40EF224A9} = {A2816368-A7EF-4C08-9CE8-E60DDF2F21EC}
-		{E5E0758B-A5C9-43E5-8F18-000F57C160B3} = {A2816368-A7EF-4C08-9CE8-E60DDF2F21EC}
 	EndGlobalSection
 EndGlobal

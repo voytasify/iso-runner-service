@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IsoRunner.Service.Core.Models
+namespace IsoRunner.Service.WebApi.Models
 {
 	public class Session
 	{

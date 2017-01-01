@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-namespace IsoRunner.Service.Core.Models
+
+namespace IsoRunner.Service.WebApi.Models
 {
 	public class Note
 	{
