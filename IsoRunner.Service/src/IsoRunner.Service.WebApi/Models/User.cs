@@ -4,11 +4,18 @@ namespace IsoRunner.Service.WebApi.Models
 {
 	public class User
 	{
-		public int Id { get; set; }
+		public User()
+		{
+			Notes = new List<Note>();
+			Messages = new List<Message>();
+			Tokens = new List<Token>();
+		}
+
+		public int UserId { get; set; }
 		public string Name { get; set; }
 		public string Password { get; set; }
-		public List<Note> Notes { get; set; }
-		public List<Message> Messages { get; set; }
-		public List<Session> Sessions { get; set; }
+		public virtual ICollection<Note> Notes { get; set; }
+		public virtual ICollection<Message> Messages { get; set; }
+		public virtual ICollection<Token> Tokens { get; set; }
 	}
 }

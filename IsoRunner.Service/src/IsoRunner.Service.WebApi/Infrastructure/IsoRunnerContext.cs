@@ -13,6 +13,6 @@ namespace IsoRunner.Service.WebApi.Infrastructure
 		public DbSet<User> Users { get; set; }
 		public DbSet<Note> Notes { get; set; }
 		public DbSet<Message> Messages { get; set; }
-		public DbSet<Session> Sessions { get; set; }
+		public DbSet<Token> Tokens { get; set; }
 	}
 }

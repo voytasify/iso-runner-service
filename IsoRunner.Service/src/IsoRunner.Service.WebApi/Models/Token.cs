@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IsoRunner.Service.WebApi.Models
 {
-	public class Note
+	public class Token
 	{
-		public int NoteId { get; set; }
-		public string Text { get; set; }
+		public string TokenId { get; set; }
+		public string Key { get; set; }
 		public DateTime CreationTime { get; set; }
+		public DateTime ExpirationTime { get; set; }
 
 		public int UserForeignKey { get; set; }
 

@@ -8,7 +8,7 @@ using IsoRunner.Service.WebApi.Infrastructure;
 namespace IsoRunner.Service.WebApi.Migrations
 {
     [DbContext(typeof(IsoRunnerContext))]
-    [Migration("20170101000453_InitialMigration")]
+    [Migration("20170101171252_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,68 +19,70 @@ namespace IsoRunner.Service.WebApi.Migrations
 
             modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MessageId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("PublishDate");
 
                     b.Property<string>("Text");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserForeignKey");
 
-                    b.HasKey("Id");
+                    b.HasKey("MessageId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserForeignKey");
 
                     b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Note", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("NoteId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationTime");
 
                     b.Property<string>("Text");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserForeignKey");
 
-                    b.HasKey("Id");
+                    b.HasKey("NoteId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserForeignKey");
 
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Session", b =>
+            modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Token", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("TokenId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<DateTime>("ExpirationTime");
 
                     b.Property<string>("Key");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<int>("UserForeignKey");
 
-                    b.Property<int?>("UserId");
+                    b.HasKey("TokenId");
 
-                    b.HasKey("Id");
+                    b.HasIndex("UserForeignKey");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Sessions");
+                    b.ToTable("Tokens");
                 });
 
             modelBuilder.Entity("IsoRunner.Service.WebApi.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -89,21 +91,24 @@ namespace IsoRunner.Service.WebApi.Migrations
                 {
                     b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
                         .WithMany("Messages")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Note", b =>
                 {
                     b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
                         .WithMany("Notes")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Session", b =>
+            modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Token", b =>
                 {
                     b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
-                        .WithMany("Sessions")
-                        .HasForeignKey("UserId");
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
         }
     }

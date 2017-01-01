@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using IsoRunner.Service.WebApi.Infrastructure;
+using IsoRunner.Service.WebApi.Services;
+using IsoRunner.Service.WebApi.Services.Impl;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,9 +31,15 @@ namespace IsoRunner.Service.WebApi
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddSingleton(provider => MapperConfiguration.CreateMapper());
+			services.AddSingleton(MapperConfiguration.CreateMapper());
 			services.AddDbContext<IsoRunnerContext>(
 				options => options.UseSqlServer(Configuration.GetConnectionString("IsoRunner")));
+
+			services.AddTransient<IUsersService, UsersService>();
+			services.AddTransient<ITokenService, TokenService>();
+			services.AddTransient<INotesService, NotesService>();
+
+			services.AddMvc();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
