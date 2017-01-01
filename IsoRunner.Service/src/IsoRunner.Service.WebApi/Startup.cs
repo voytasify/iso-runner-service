@@ -41,6 +41,8 @@ namespace IsoRunner.Service.WebApi
 			services.AddTransient<IMessageService, MessageService>();
 
 			services.AddMvc();
+
+			services.AddSwaggerGen();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -49,6 +51,9 @@ namespace IsoRunner.Service.WebApi
 			loggerFactory.AddDebug();
 
 			app.UseMvc();
+
+			app.UseSwagger();
+			app.UseSwaggerUi();
 		}
 	}
 }
