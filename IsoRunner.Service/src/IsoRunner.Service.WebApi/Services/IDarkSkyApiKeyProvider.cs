@@ -1,6 +1,6 @@
 ﻿namespace IsoRunner.Service.WebApi.Services
 {
-	public interface IApiKeyService
+	public interface IDarkSkyApiKeyProvider
 	{
 		string ApiKey { get; }
 	}

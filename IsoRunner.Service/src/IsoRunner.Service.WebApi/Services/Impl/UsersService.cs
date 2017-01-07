@@ -17,14 +17,22 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			_tokenService = tokenService;
 		}
 
-		public string Login(string name, string password)
+		public string Login(string name, string password, out string error)
 		{
+			error = null;
+
 			var user = _context.Users.Include(u => u.Tokens).FirstOrDefault(u => u.Name == name);
 			if (user == null)
+			{
+				error = "User does not exist";
 				return null;
+			}
 
 			if (user.Password != password)
+			{
+				error = "Invalid password";
 				return null;
+			}
 
 			var token = user.Tokens.FirstOrDefault(t => t.ExpirationTime > DateTime.Now);
 			if (token != null)
@@ -43,10 +51,15 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			return token.Key;
 		}
 
-		public string Register(string name, string password)
+		public string Register(string name, string password, out string error)
 		{
+			error = null;
+
 			if (_context.Users.Any(u => u.Name == name))
+			{
+				error = "Name already taken";
 				return null;
+			}
 
 			var user = new User
 			{

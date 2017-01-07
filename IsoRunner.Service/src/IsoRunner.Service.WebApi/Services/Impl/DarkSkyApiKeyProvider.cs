@@ -1,8 +1,8 @@
 ﻿namespace IsoRunner.Service.WebApi.Services.Impl
 {
-	public class ApiKeyService : IApiKeyService
+	public class DarkSkyApiKeyProvider : IDarkSkyApiKeyProvider
 	{
-		public ApiKeyService(string apiKey)
+		public DarkSkyApiKeyProvider(string apiKey)
 		{
 			ApiKey = apiKey;
 		}

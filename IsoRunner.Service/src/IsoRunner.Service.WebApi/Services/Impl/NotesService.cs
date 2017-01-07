@@ -28,6 +28,16 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			_context.SaveChanges();
 		}
 
+		public void RemoveNote(int noteId, User user)
+		{
+			var note = _context.Notes.Include(n => n.User).FirstOrDefault(n => n.NoteId == noteId);
+			if (note?.User.UserId != user.UserId)
+				return;
+
+			_context.Notes.Remove(note);
+			_context.SaveChanges();
+		}
+
 		public IEnumerable<Note> GetNotes(User user)
 		{
 			var notes = _context.Users.Include(u => u.Notes)

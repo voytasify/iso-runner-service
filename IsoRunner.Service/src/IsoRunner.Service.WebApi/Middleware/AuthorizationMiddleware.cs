@@ -9,12 +9,12 @@ namespace IsoRunner.Service.WebApi.Middleware
 	public class AuthorizationMiddleware
 	{
 		private readonly RequestDelegate _next;
-		private readonly IApiKeyService _apiKeyService;
+		private readonly IApiKeyProvider _apiKeyProvider;
 
-		public AuthorizationMiddleware(RequestDelegate next, IApiKeyService apiKeyService)
+		public AuthorizationMiddleware(RequestDelegate next, IApiKeyProvider apiKeyProvider)
 		{
 			_next = next;
-			_apiKeyService = apiKeyService;
+			_apiKeyProvider = apiKeyProvider;
 		}
 
 		public async Task Invoke(HttpContext context)
@@ -29,11 +29,13 @@ namespace IsoRunner.Service.WebApi.Middleware
 				if (context.Request.Headers.TryGetValue("X-ApiKey", out apiKeys))
 				{
 					var apiKey = apiKeys.FirstOrDefault();
-					if (apiKey == _apiKeyService.ApiKey)
+					if (apiKey == _apiKeyProvider.ApiKey)
 						await _next.Invoke(context);
 				}
-
-				context.Response.StatusCode = 401;
+				else
+				{
+					context.Response.StatusCode = 401;
+				}
 			}
 		}
 	}

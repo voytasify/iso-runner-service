@@ -40,7 +40,11 @@ namespace IsoRunner.Service.WebApi
 			services.AddTransient<ITokenService, TokenService>();
 			services.AddTransient<INotesService, NotesService>();
 			services.AddTransient<IMessageService, MessageService>();
-			services.AddSingleton<IApiKeyService>(new ApiKeyService(Configuration.GetValue<string>("X-ApiKey")));
+			services.AddTransient<IWeatherService, WeatherService>();
+			services.AddSingleton<IDarkSkyApiKeyProvider>(
+				new DarkSkyApiKeyProvider(Configuration.GetValue<string>("DarkSky-ApiKey")));
+			services.AddSingleton<IApiKeyProvider>(
+				new ApiKeyProvider(Configuration.GetValue<string>("X-ApiKey")));
 
 			services.AddMvc();
 
