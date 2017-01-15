@@ -1,11 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace IsoRunner.Service.WebApi.Models
+namespace IsoRunner.Service.WebApi.DTOs
 {
-	public class Filter
+	public class FilterDTO
 	{
-		public int FilterId { get; set; }
 		public DateTime? FromDate { get; set; }
 		public DateTime? ToDate { get; set; }
 		public double? FromDistance { get; set; }
@@ -13,9 +11,5 @@ namespace IsoRunner.Service.WebApi.Models
 		public int? FromTemperature { get; set; }
 		public int? ToTemperature { get; set; }
 		public string WeatherConditions { get; set; }
-
-		[ForeignKey("UserForeignKey")]
-		public virtual User User { get; set; }
-		public int UserForeignKey { get; set; }
 	}
 }

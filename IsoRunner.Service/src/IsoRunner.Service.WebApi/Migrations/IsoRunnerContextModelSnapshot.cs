@@ -20,17 +20,17 @@ namespace IsoRunner.Service.WebApi.Migrations
 					b.Property<int>("FilterId")
 						.ValueGeneratedOnAdd();
 
-					b.Property<DateTime>("FromDate");
+					b.Property<DateTime?>("FromDate");
 
-					b.Property<double>("FromDistance");
+					b.Property<double?>("FromDistance");
 
-					b.Property<int>("FromTemperature");
+					b.Property<int?>("FromTemperature");
 
-					b.Property<DateTime>("ToDate");
+					b.Property<DateTime?>("ToDate");
 
-					b.Property<double>("ToDistance");
+					b.Property<double?>("ToDistance");
 
-					b.Property<int>("ToTemperature");
+					b.Property<int?>("ToTemperature");
 
 					b.Property<int>("UserForeignKey");
 

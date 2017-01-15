@@ -10,9 +10,11 @@ namespace IsoRunner.Service.WebApi
 		public AutoMapperProfile()
 		{
 			CreateMap<Note, NoteDTO>();
+			CreateMap<CurrentDataPoint, WeatherDTO>();
+			CreateMap<Filter, FilterDTO>();
+			CreateMap<Training, TrainingDTO>();
 			CreateMap<Message, MessageDTO>()
 				.ForMember(dest => dest.PublisherName, opts => opts.MapFrom(src => src.User.Name));
-			CreateMap<CurrentDataPoint, WeatherDTO>();
 		}
 	}
 }
