@@ -8,6 +8,6 @@ namespace IsoRunner.Service.WebApi.Services
 	{
 		void AddTraining(User user, TrainingDTO trainingDTO);
 		void RemoveTraining(User user, int trainingId);
-		IEnumerable<Training> GetTrainings(User user);
+		IEnumerable<Training> GetTrainings(User user, Filter filter);
 	}
 }

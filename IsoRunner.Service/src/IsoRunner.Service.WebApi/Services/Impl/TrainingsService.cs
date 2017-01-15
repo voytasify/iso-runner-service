@@ -4,6 +4,7 @@ using IsoRunner.Service.WebApi.DTOs;
 using IsoRunner.Service.WebApi.Infrastructure;
 using IsoRunner.Service.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.SwaggerGen.Generator;
 
 namespace IsoRunner.Service.WebApi.Services.Impl
 {
@@ -44,11 +45,59 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			_context.SaveChanges();
 		}
 
-		public IEnumerable<Training> GetTrainings(User user)
+		public IEnumerable<Training> GetTrainings(User user, Filter filter)
 		{
 			var trainings = _context.Users.Include(u => u.Trainings)
-				.First(u => u.UserId == user.UserId).Trainings
-				.ToList();
+				.First(u => u.UserId == user.UserId).Trainings.Where(t =>
+				{
+					if (filter == null)
+						return true;
+
+					if (filter.FromDate != null)
+					{
+						if (t.Date < filter.FromDate.Value)
+							return false;
+					}
+
+					if (filter.ToDate != null)
+					{
+						if (t.Date > filter.ToDate.Value)
+							return false;
+					}
+
+					if (filter.FromDistance != null)
+					{
+						if (t.Distance < filter.FromDistance.Value)
+							return false;
+					}
+
+					if (filter.ToDistance != null)
+					{
+						if (t.Distance > filter.ToDistance.Value)
+							return false;
+					}
+
+					if (filter.FromTemperature != null)
+					{
+						if (t.Temperature < filter.FromTemperature.Value)
+							return false;
+					}
+
+					if (filter.ToTemperature != null)
+					{
+						if(t.Temperature > filter.ToTemperature.Value)
+							return false;
+					}
+
+					if (filter.WeatherConditions != null)
+					{
+						if (t.WeatherConditions != filter.WeatherConditions)
+							return false;
+					}
+
+					return true;
+				}).ToList();
+
 			return trainings;
 		}
 	}

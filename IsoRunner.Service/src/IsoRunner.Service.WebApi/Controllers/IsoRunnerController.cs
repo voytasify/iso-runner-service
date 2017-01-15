@@ -171,7 +171,8 @@ namespace IsoRunner.Service.WebApi.Controllers
 			if (user == null)
 				return Enumerable.Empty<TrainingDTO>();
 
-			var trainings = _trainingsService.GetTrainings(user);
+			var filter = _filtersService.GetFilter(user);
+			var trainings = _trainingsService.GetTrainings(user, filter);
 			return _mapper.Map<IEnumerable<TrainingDTO>>(trainings);
 		}
 	}
