@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using IsoRunner.Service.WebApi.DTOs;
+using IsoRunner.Service.WebApi.Models;
 using IsoRunner.Service.WebApi.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IsoRunner.Service.WebApi.Controllers
@@ -16,15 +16,17 @@ namespace IsoRunner.Service.WebApi.Controllers
 		private readonly INotesService _notesService;
 		private readonly IMessageService _messageService;
 		private readonly IWeatherService _weatherService;
+		private readonly IFiltersService _filtersService;
 		private readonly IMapper _mapper;
 
 		public IsoRunnerController(IUsersService usersService, INotesService notesService, IMessageService messageService, 
-			IWeatherService weatherService, IMapper mapper)
+			IWeatherService weatherService, IFiltersService filtersService, IMapper mapper)
 		{
 			_usersService = usersService;
 			_notesService = notesService;
 			_messageService = messageService;
 			_weatherService = weatherService;
+			_filtersService = filtersService;
 			_mapper = mapper;
 		}
 
@@ -116,5 +118,28 @@ namespace IsoRunner.Service.WebApi.Controllers
 		[HttpGet]
 		public async Task<WeatherDTO> GetCurrentWeather(float latitude, float longitude)
 			=> await _weatherService.GetCurrentWeather(latitude, longitude);
+
+		[HttpPost]
+		public string SaveFilter([FromQuery] string token, FilterDTO filter)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return "Invalid token";
+
+			_filtersService.SaveFilter(user, filter);
+			return "Ok";
+		}
+
+		[HttpGet]
+		public FilterDTO GetFilter(string token)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return new FilterDTO();
+
+			var filter = _filtersService.GetFilter(user);
+			return _mapper.Map<FilterDTO>(filter);
+
+		}
 	}
 }

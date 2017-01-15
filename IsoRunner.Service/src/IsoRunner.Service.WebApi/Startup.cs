@@ -41,6 +41,7 @@ namespace IsoRunner.Service.WebApi
 			services.AddTransient<INotesService, NotesService>();
 			services.AddTransient<IMessageService, MessageService>();
 			services.AddTransient<IWeatherService, WeatherService>();
+			services.AddTransient<IFiltersService, FiltersService>();
 			services.AddSingleton<IDarkSkyApiKeyProvider>(
 				new DarkSkyApiKeyProvider(Configuration.GetValue<string>("DarkSky-ApiKey")));
 			services.AddSingleton<IApiKeyProvider>(

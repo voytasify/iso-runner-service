@@ -41,7 +41,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 		public IEnumerable<Note> GetNotes(User user)
 		{
 			var notes = _context.Users.Include(u => u.Notes)
-				.FirstOrDefault(u => u.UserId == user.UserId).Notes
+				.First(u => u.UserId == user.UserId).Notes
 				.ToList();
 			return notes;
 		}

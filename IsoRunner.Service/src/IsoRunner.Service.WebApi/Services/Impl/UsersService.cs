@@ -75,6 +75,9 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 				User = user
 			};
 			user.Tokens.Add(token);
+			
+			var filter = new Filter();
+			user.Filter = filter;
 
 			_context.Users.Add(user);
 			_context.SaveChanges();
