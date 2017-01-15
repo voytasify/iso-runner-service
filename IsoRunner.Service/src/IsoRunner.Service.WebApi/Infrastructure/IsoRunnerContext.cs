@@ -14,5 +14,7 @@ namespace IsoRunner.Service.WebApi.Infrastructure
 		public DbSet<Note> Notes { get; set; }
 		public DbSet<Message> Messages { get; set; }
 		public DbSet<Token> Tokens { get; set; }
+		public DbSet<Filter> Filters { get; set; }
+		public DbSet<Training> Trainings { get; set; }
 	}
 }

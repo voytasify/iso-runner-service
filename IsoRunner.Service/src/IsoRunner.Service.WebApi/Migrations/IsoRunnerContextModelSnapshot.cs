@@ -15,6 +15,35 @@ namespace IsoRunner.Service.WebApi.Migrations
 				.HasAnnotation("ProductVersion", "1.1.0-rtm-22752")
 				.HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Filter", b =>
+				{
+					b.Property<int>("FilterId")
+						.ValueGeneratedOnAdd();
+
+					b.Property<DateTime>("FromDate");
+
+					b.Property<double>("FromDistance");
+
+					b.Property<int>("FromTemperature");
+
+					b.Property<DateTime>("ToDate");
+
+					b.Property<double>("ToDistance");
+
+					b.Property<int>("ToTemperature");
+
+					b.Property<int>("UserForeignKey");
+
+					b.Property<string>("WeatherConditions");
+
+					b.HasKey("FilterId");
+
+					b.HasIndex("UserForeignKey")
+						.IsUnique();
+
+					b.ToTable("Filters");
+				});
+
 			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Message", b =>
 				{
 					b.Property<int>("MessageId")
@@ -71,6 +100,32 @@ namespace IsoRunner.Service.WebApi.Migrations
 					b.ToTable("Tokens");
 				});
 
+			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Training", b =>
+				{
+					b.Property<int>("TrainingId")
+						.ValueGeneratedOnAdd();
+
+					b.Property<DateTime>("Date");
+
+					b.Property<string>("Description");
+
+					b.Property<double>("Distance");
+
+					b.Property<TimeSpan>("Duration");
+
+					b.Property<int>("Temperature");
+
+					b.Property<int>("UserForeignKey");
+
+					b.Property<int>("WeatherConditions");
+
+					b.HasKey("TrainingId");
+
+					b.HasIndex("UserForeignKey");
+
+					b.ToTable("Trainings");
+				});
+
 			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.User", b =>
 				{
 					b.Property<int>("UserId")
@@ -83,6 +138,14 @@ namespace IsoRunner.Service.WebApi.Migrations
 					b.HasKey("UserId");
 
 					b.ToTable("Users");
+				});
+
+			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Filter", b =>
+				{
+					b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
+						.WithOne("Filter")
+						.HasForeignKey("IsoRunner.Service.WebApi.Models.Filter", "UserForeignKey")
+						.OnDelete(DeleteBehavior.Cascade);
 				});
 
 			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Message", b =>
@@ -105,6 +168,14 @@ namespace IsoRunner.Service.WebApi.Migrations
 				{
 					b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
 						.WithMany("Tokens")
+						.HasForeignKey("UserForeignKey")
+						.OnDelete(DeleteBehavior.Cascade);
+				});
+
+			modelBuilder.Entity("IsoRunner.Service.WebApi.Models.Training", b =>
+				{
+					b.HasOne("IsoRunner.Service.WebApi.Models.User", "User")
+						.WithMany("Trainings")
 						.HasForeignKey("UserForeignKey")
 						.OnDelete(DeleteBehavior.Cascade);
 				});

@@ -9,9 +9,8 @@ namespace IsoRunner.Service.WebApi.Models
 		public string Text { get; set; }
 		public DateTime PublishDate { get; set; }
 
-		public int UserForeignKey { get; set; }
-
 		[ForeignKey("UserForeignKey")]
 		public virtual User User { get; set; }
+		public int UserForeignKey { get; set; }
 	}
 }
