@@ -5,7 +5,7 @@ namespace IsoRunner.Service.WebApi.Services
 {
 	public interface IFiltersService
 	{
-		void SaveFilter(User user, FilterDTO filter);
+		void SaveFilter(User user, FilterDTO filterDTO);
 		Filter GetFilter(User user);
 	}
 }

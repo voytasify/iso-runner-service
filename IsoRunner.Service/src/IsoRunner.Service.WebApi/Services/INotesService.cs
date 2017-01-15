@@ -5,8 +5,8 @@ namespace IsoRunner.Service.WebApi.Services
 {
 	public interface INotesService
 	{
-		void AddNote(string text, User user);
-		void RemoveNote(int noteId, User user);
+		void AddNote(User user, string text);
+		void RemoveNote(User user, int noteId);
 		IEnumerable<Note> GetNotes(User user);
 	}
 }

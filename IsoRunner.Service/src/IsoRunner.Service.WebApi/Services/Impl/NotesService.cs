@@ -16,7 +16,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			_context = context;
 		}
 
-		public void AddNote(string text, User user)
+		public void AddNote(User user, string text)
 		{
 			var note = new Note
 			{
@@ -28,7 +28,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 			_context.SaveChanges();
 		}
 
-		public void RemoveNote(int noteId, User user)
+		public void RemoveNote(User user, int noteId)
 		{
 			var note = _context.Notes.Include(n => n.User).FirstOrDefault(n => n.NoteId == noteId);
 			if (note?.User.UserId != user.UserId)

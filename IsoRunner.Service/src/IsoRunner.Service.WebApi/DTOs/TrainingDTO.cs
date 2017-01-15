@@ -4,6 +4,7 @@ namespace IsoRunner.Service.WebApi.DTOs
 {
 	public class TrainingDTO
 	{
+		public int TrainingId { get; set; }
 		public DateTime Date { get; set; }
 		public TimeSpan Duration { get; set; }
 		public double Distance { get; set; }

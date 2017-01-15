@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using IsoRunner.Service.WebApi.DTOs;
-using IsoRunner.Service.WebApi.Models;
 using IsoRunner.Service.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,16 +16,18 @@ namespace IsoRunner.Service.WebApi.Controllers
 		private readonly IMessageService _messageService;
 		private readonly IWeatherService _weatherService;
 		private readonly IFiltersService _filtersService;
+		private readonly ITrainingsService _trainingsService;
 		private readonly IMapper _mapper;
 
 		public IsoRunnerController(IUsersService usersService, INotesService notesService, IMessageService messageService, 
-			IWeatherService weatherService, IFiltersService filtersService, IMapper mapper)
+			IWeatherService weatherService, IFiltersService filtersService, ITrainingsService trainingsService, IMapper mapper)
 		{
 			_usersService = usersService;
 			_notesService = notesService;
 			_messageService = messageService;
 			_weatherService = weatherService;
 			_filtersService = filtersService;
+			_trainingsService = trainingsService;
 			_mapper = mapper;
 		}
 
@@ -67,7 +68,7 @@ namespace IsoRunner.Service.WebApi.Controllers
 			if (user == null)
 				return "Invalid token";
 
-			_notesService.AddNote(text, user);
+			_notesService.AddNote(user, text);
 			return "Ok";
 		}
 
@@ -78,7 +79,7 @@ namespace IsoRunner.Service.WebApi.Controllers
 			if (user == null)
 				return "Invalid token";
 
-			_notesService.RemoveNote(noteId, user);
+			_notesService.RemoveNote(user, noteId);
 			return "Ok";
 		}
 
@@ -139,7 +140,39 @@ namespace IsoRunner.Service.WebApi.Controllers
 
 			var filter = _filtersService.GetFilter(user);
 			return _mapper.Map<FilterDTO>(filter);
+		}
 
+		[HttpPost]
+		public string AddTraining([FromQuery] string token, TrainingDTO training)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return "Invalid token";
+
+			_trainingsService.AddTraining(user, training);
+			return "Ok";
+		}
+
+		[HttpPost]
+		public string RemoveTraining([FromQuery] string token, int trainingId)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return "Invalid token";
+
+			_trainingsService.RemoveTraining(user, trainingId);
+			return "Ok";
+		}
+
+		[HttpGet]
+		public IEnumerable<TrainingDTO> GetTrainings(string token)
+		{
+			var user = _usersService.GetUser(token);
+			if (user == null)
+				return Enumerable.Empty<TrainingDTO>();
+
+			var trainings = _trainingsService.GetTrainings(user);
+			return _mapper.Map<IEnumerable<TrainingDTO>>(trainings);
 		}
 	}
 }
