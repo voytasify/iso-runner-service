@@ -117,7 +117,7 @@ namespace IsoRunner.Service.WebApi.Migrations
 
 					b.Property<int>("UserForeignKey");
 
-					b.Property<int>("WeatherConditions");
+					b.Property<string>("WeatherConditions");
 
 					b.HasKey("TrainingId");
 
