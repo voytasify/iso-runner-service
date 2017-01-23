@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using IsoRunner.Service.WebApi.DTOs;
 using IsoRunner.Service.WebApi.Infrastructure;
 using IsoRunner.Service.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Swashbuckle.SwaggerGen.Generator;
 
 namespace IsoRunner.Service.WebApi.Services.Impl
 {
@@ -21,7 +21,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 		{
 			var training = new Training
 			{
-				Date = trainingDTO.Date,
+				Date = DateTime.Parse(trainingDTO.Date),
 				Description = trainingDTO.Description,
 				Distance = trainingDTO.Distance,
 				Duration = trainingDTO.Duration,

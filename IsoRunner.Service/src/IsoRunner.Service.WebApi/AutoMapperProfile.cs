@@ -12,7 +12,8 @@ namespace IsoRunner.Service.WebApi
 			CreateMap<Note, NoteDTO>();
 			CreateMap<CurrentDataPoint, WeatherDTO>();
 			CreateMap<Filter, FilterDTO>();
-			CreateMap<Training, TrainingDTO>();
+			CreateMap<Training, TrainingDTO>()
+				.ForMember(dest => dest.Date, opts => opts.MapFrom(src => src.Date.ToString("dd-MM-yyyy")));
 			CreateMap<Message, MessageDTO>()
 				.ForMember(dest => dest.PublisherName, opts => opts.MapFrom(src => src.User.Name));
 		}
