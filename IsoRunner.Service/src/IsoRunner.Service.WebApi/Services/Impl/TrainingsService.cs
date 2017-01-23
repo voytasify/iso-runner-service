@@ -85,7 +85,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 
 					if (filter.ToTemperature != null)
 					{
-						if(t.Temperature > filter.ToTemperature.Value)
+						if (t.Temperature > filter.ToTemperature.Value)
 							return false;
 					}
 
@@ -96,7 +96,7 @@ namespace IsoRunner.Service.WebApi.Services.Impl
 					}
 
 					return true;
-				}).ToList();
+				}).OrderByDescending(t => t.Date).ToList();
 
 			return trainings;
 		}
